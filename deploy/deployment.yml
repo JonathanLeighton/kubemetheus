@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kubmetheus
+  name: kubmetheus-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kubmetheus
+  template:
+    metadata:
+      labels:
+        app: kubmetheus
+
+    spec:
+      containers:
+      - name: kubmetheus-pod
+        image: 10.105.99.145:5000/kubmetheus:0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+
+   
