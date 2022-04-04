@@ -23,8 +23,8 @@ docker-image: ${IMAGE_CHECK_FILE}
 
 ${IMAGE_CHECK_FILE}: ${BIN_NAME} Dockerfile 
 	$(shell go mod vendor)
-	docker build -t 10.105.99.145:5000/kubmetheus:0.1 .
-	docker push 10.105.99.145:5000/kubmetheus:0.1
+	docker build -t 10.100.124.45:5000/kubmetheus:0.1 .
+	docker push 10.100.124.45:5000/kubmetheus:0.1
 	touch $@
 
 test:
@@ -32,8 +32,9 @@ test:
 
 .PHONY: undeploy
 undeploy: 
-	kubectl delete deployment ${K8S_DEPLOYMENT}
-	kubectl delete service ${K8S_SERVICE}
+	kubectl delete deployments,pods,services,roles,rolebindings,serviceaccounts -l app=kubmetheus
+	kubectl delete deployments,pods,services -l app=prometheus
+	rm out/deploy.check out/service.check
 
 .PHONY: deploy service restart
 deploy: out/deploy.check

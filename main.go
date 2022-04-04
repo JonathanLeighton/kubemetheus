@@ -38,6 +38,7 @@ type StatusRecorder struct {
 }
 
 func (sr *StatusRecorder) WriteHeader(statusCode int) {
+	log.Printf("we are running new code, sr is : %v", sr)
 	sr.Status = statusCode
 	sr.ResponseWriter.WriteHeader(statusCode)
 }
